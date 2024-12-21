@@ -18,6 +18,7 @@ const ChatBox = () => {
                     <p>02:30 PM</p>
                 </div>
             </div>
+            {/* sender msg */}
             <div className="s-msg">
                 <img className='msg-img' src={assets.pic1} alt="" />
                 <div>
