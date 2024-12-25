@@ -13,7 +13,7 @@ Explore the repository here: [Real-Time Chat App](https://github.com/YourUsernam
 
 ## 📖 Project Overview
 
-- **Technology Stack**: MERN (MongoDB, Express, React, Node.js), Socket.IO
+- **Technology Stack**: MERN (MongoDB, Express, React, Node.js), Socket.IO, Firebase 
 - **Goal**: Build a fully functional chat application that supports real-time messaging, group chats, notifications, and user authentication.
 
 ---
