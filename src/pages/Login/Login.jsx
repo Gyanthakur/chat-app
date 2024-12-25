@@ -46,6 +46,8 @@ const Login = () => {
         </div>
         <div className="login-forgot">
           {
+
+            // when state is sign up then chnage according to the state
             currState === "Sign up"
             ?
             <p className="login-toggle">Already have an account <span onClick={()=> setCurrState("Login")}>click here</span></p>
