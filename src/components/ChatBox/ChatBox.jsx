@@ -146,15 +146,15 @@ const ChatBox = () => {
 							<p className="msg">{msg.text}</p>
 						)}
 						<div>
-							{/* <img src={assets.profile_img} alt="" /> */}
-							<img
+							<img src={assets.profile_img} alt="" />
+							{/* <img
 								src={
 									msg.sId === userData.id
 										? userData.avatar
 										: chatUser.userData.avatar
 								}
 								alt=""
-							/>
+							/> */}
 							<p>{convertTimeStamp(msg.createdAt)}</p>
 						</div>
 					</div>
