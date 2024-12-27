@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./LeftSidebar.css";
 import assets from "../../assets/assets";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +19,18 @@ import { AppContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
 const LeftSidebar = () => {
 	const navigate = useNavigate();
-	const { userData, chatData, messages, setMessages,
-		messagesId, setMessagesId,
-		chatUser, setChatUser, } = useContext(AppContext);
+	const {
+		userData,
+		chatData,
+		messages,
+		setMessages,
+		messagesId,
+		setMessagesId,
+		chatUser,
+		setChatUser,
+		chatVisible,
+		setChatVisible,
+	} = useContext(AppContext);
 
 	const [user, setUser] = useState(null);
 	const [showSearch, setShowSearch] = useState(false);
@@ -83,8 +92,22 @@ const LeftSidebar = () => {
 					rId: user.id,
 					updatedAt: Date.now(),
 					messageSeen: true,
-				}),
+				})
 			});
+			const uSnap = await getDoc(doc(db,"users", user.id))
+			const uData = uSnap.data();
+			setChat({
+				messageId: newMessageRef.id,
+				lastMessage:"",
+				rId: user.id,
+				updatedAt: Date.now(),
+				messageSeen: true,
+				userData: uData
+
+			})
+
+			setShowSearch(false)
+			setChatVisible(true)
 		} catch (error) {
 			toast.error(error.message);
 			console.error(error);
@@ -93,28 +116,44 @@ const LeftSidebar = () => {
 
 	const setChat = async (item) => {
 		try {
-			setMessagesId(item.messageId)
-		setChatUser(item)
+			setMessagesId(item.messageId);
+			setChatUser(item);
 
-		const userChatsRef = doc(db,'chats', userData.id);
+			const userChatsRef = doc(db, "chats", userData.id);
 
-		const userChatsSnapshot = await getDoc(userChatsRef);
-		const userChatsData = userChatsSnapshot.data();
+			const userChatsSnapshot = await getDoc(userChatsRef);
+			const userChatsData = userChatsSnapshot.data();
 
-		const chatIndex = userChatsData.chatsData.findIndex((c)=> c.messageId === item.messageId);
+			const chatIndex = userChatsData.chatsData.findIndex(
+				(c) => c.messageId === item.messageId
+			);
 
-		userChatsData.chatsData[chatIndex].messageSeen = true;
-		await updateDoc(userChatsRef,{
-			chatsData: userChatsData.chatsData
-		})
+			userChatsData.chatsData[chatIndex].messageSeen = true;
+			await updateDoc(userChatsRef, {
+				chatsData: userChatsData.chatsData,
+			});
+
+			setChatVisible(true);
 		} catch (error) {
-			toast.error(error.message)
+			toast.error(error.message);
 		}
-		
-	}
+	};
+
+	useEffect(()=>{
+		const updateChatUserData = async () => {
+			if(chatUser){
+				const userRef = doc(db,"users", chatUser.userData.id);
+				const userSnap = await getDoc(userRef)
+				const userData = userSnap.data();
+				setChatUser(prev=>({...prev,userData:userData}))
+			}
+		}
+		updateChatUserData();
+	},[chatData])
 
 	return (
-		<div className="ls">
+		<div className={`ls ${chatVisible ? 'hidden' : ''}`}>
+		{/*  <div className="ls"> */}
 			<div className="ls-top">
 				<div className="ls-nav">
 					<img src={assets.logo} className="logo" alt="" />
@@ -146,15 +185,23 @@ const LeftSidebar = () => {
 					</div>
 				) : (
 					chatData?.map((item, index) => (
-							<div onClick={() => setChat(item)} key={index} className={`friends ${item.messageSeen || item.messageId === messagesId ? "" : "border"}`}>
-								<img src={assets.profile_img} alt="" />
-								{/* <img src={item.userData.avatar} alt="" /> */}
-								<div>
-									<p>{item.userData.name}</p>
-									<span>{item.lastMessage}</span>
-								</div>
+						<div
+							onClick={() => setChat(item)}
+							key={index}
+							className={`friends ${
+								item.messageSeen || item.messageId === messagesId
+									? ""
+									: "border"
+							}`}
+						>
+							<img src={assets.profile_img} alt="" />
+							{/* <img src={item.userData.avatar} alt="" /> */}
+							<div>
+								<p>{item.userData.name}</p>
+								<span>{item.lastMessage}</span>
 							</div>
-						))
+						</div>
+					))
 				)}
 			</div>
 		</div>
