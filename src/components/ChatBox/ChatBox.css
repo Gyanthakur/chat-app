@@ -1,4 +1,4 @@
-.chat-box{
+.chat-box {
     height: 75vh;
     position: relative;
     background-color: #f1f5ff;
@@ -133,4 +133,23 @@ img.dot{
     font-size: 20px;
     font-weight: 500;
     color: #383838;
+}
+
+.chat-user .arrow{
+    display: none;
+    cursor: pointer;
+}
+
+@media (max-width:950px) {
+    .chat-box{
+        width: 100%;
+        justify-content: center;
+    }
+    .chat-user .arrow{
+        display: block;
+    }
+    .chat-user .help{
+        display: none;
+    }
+    
 }
