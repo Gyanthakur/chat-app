@@ -61,3 +61,12 @@
     color: #077EFF;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .login{
+        flex-direction: column;
+        justify-content: center;
+        gap: 30px;
+    }
+    
+}
