@@ -1,6 +1,7 @@
 <div align="center">
 
-![vibechatLogo](https://github.com/user-attachments/assets/8afe9f37-f9d0-4128-a904-a87d5959dacc)
+<img width="300" alt="logo_icon" src="https://github.com/user-attachments/assets/017c884f-2802-4997-b343-68ee8e3eeb48" />
+
 
 </div>
 
@@ -129,11 +130,20 @@ npm run dev
 
 
   ### Chat Screen
-  ![image](https://github.com/user-attachments/assets/4d11860c-1bd6-41d9-bad2-65850e196fc5)
+  ![image](https://github.com/user-attachments/assets/6d24b3d3-6c7e-44a3-86ed-b5d34b2d647e)
+
 
 
   ### Profile Update Page
   ![image](https://github.com/user-attachments/assets/d22dbfeb-725d-4f88-b4e5-c37a2e76a722)
+
+  ---
+  ### Mobile view
+  ![image](https://github.com/user-attachments/assets/64bd6629-449a-4f61-9187-53719bbda8be)
+
+  ![image](https://github.com/user-attachments/assets/fec2f492-94a2-46f7-9999-1c684c175896)
+
+  ![image](https://github.com/user-attachments/assets/db1f0262-7615-4314-a26c-884ec74ffd27)
 
 
 
