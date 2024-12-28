@@ -141,6 +141,13 @@ img.dot{
     display: none;
     cursor: pointer;
 }
+.chat-user .lastSeen {
+    font-weight: 300;
+    font-size: 13px;
+    color: #940606; /* Lighter gray color for last seen text */
+    margin-left: 5px; /* Optional, for spacing between name and last seen message */
+    font-style: italic; /* Optional, gives a distinct look */
+}
 
 @media (max-width:950px) {
     .chat-box{
