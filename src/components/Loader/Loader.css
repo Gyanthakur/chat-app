@@ -1,11 +1,18 @@
 /* Center the loader on the screen */
 .loader-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     /* background-color: #f4f4f4; */
   }
+
+  .loading {
+    font-size: 50px;
+    color: white;
+    text-align: center;
+}
   
   /* Create a spinner animation */
   .spinner {
