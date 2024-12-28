@@ -300,50 +300,99 @@ const ChatBox = () => {
 
     const [input, setInput] = useState("");
 
-    const sendMessage = async () => {
-        try {
-            if (input && messagesId) {
-                // Update the message document
-                await updateDoc(doc(db, "messages", messagesId), {
-                    messages: arrayUnion({
-                        sId: userData.id,
-                        text: input,
-                        createdAt: new Date(),
-                        seen: false,
-                    }),
-                });
+    // const sendMessage = async () => {
+    //     try {
+    //         if (input && messagesId) {
+    //             // Update the message document
+    //             await updateDoc(doc(db, "messages", messagesId), {
+    //                 messages: arrayUnion({
+    //                     sId: userData.id,
+    //                     text: input,
+    //                     createdAt: new Date(),
+    //                     seen: false,
+    //                 }),
+    //             });
 
-                const userIds = [chatUser.rId, userData.id];
+    //             const userIds = [chatUser.rId, userData.id];
 
-                userIds.forEach(async (id) => {
-                    const userChatsRef = doc(db, "chats", id);
-                    const userChatsSnapshot = await getDoc(userChatsRef);
+    //             userIds.forEach(async (id) => {
+    //                 const userChatsRef = doc(db, "chats", id);
+    //                 const userChatsSnapshot = await getDoc(userChatsRef);
 
-                    if (userChatsSnapshot.exists()) {
-                        const userChatData = userChatsSnapshot.data();
+    //                 if (userChatsSnapshot.exists()) {
+    //                     const userChatData = userChatsSnapshot.data();
 
-                        const chatIndex = userChatData.chatsData.findIndex(
-                            (c) => c.messageId === messagesId
-                        );
-                        userChatData.chatsData[chatIndex].lastMessage = input.slice(0, 30);
-                        userChatData.chatsData[chatIndex].updatedAt = Date.now();
-                        if (userChatData.chatsData[chatIndex].rId === userData.id) {
-                            userChatData.chatsData[chatIndex].messageSeen = false;
-                        }
-                        await updateDoc(userChatsRef, {
-                            chatsData: userChatData.chatsData,
-                        });
-                    }
-                });
-            }
-        } catch (error) {
-            toast.error(error.message);
-            console.log(error);
-        }
+    //                     const chatIndex = userChatData.chatsData.findIndex(
+    //                         (c) => c.messageId === messagesId
+    //                     );
+    //                     userChatData.chatsData[chatIndex].lastMessage = input.slice(0, 30);
+    //                     userChatData.chatsData[chatIndex].updatedAt = Date.now();
+    //                     if (userChatData.chatsData[chatIndex].rId === userData.id) {
+    //                         userChatData.chatsData[chatIndex].messageSeen = false;
+    //                     }
+    //                     await updateDoc(userChatsRef, {
+    //                         chatsData: userChatData.chatsData,
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //     } catch (error) {
+    //         toast.error(error.message);
+    //         console.log(error);
+    //     }
 
-        setInput("");
-    };
+    //     setInput("");
+    // };
 
+
+	const sendMessage = async () => {
+		try {
+			if (input && messagesId) {
+				// Update the message document
+				await updateDoc(doc(db, "messages", messagesId), {
+					messages: arrayUnion({
+						sId: userData.id,
+						text: input,
+						createdAt: new Date(),
+					}),
+				});
+	
+				const userIds = [chatUser.rId, userData.id];
+	
+				userIds.forEach(async (id) => {
+					const userChatsRef = doc(db, "chats", id);
+					const userChatsSnapshot = await getDoc(userChatsRef);
+	
+					if (userChatsSnapshot.exists()) {
+						const userChatData = userChatsSnapshot.data();
+	
+						const chatIndex = userChatData.chatsData.findIndex(
+							(c) => c.messageId === messagesId
+						);
+						userChatData.chatsData[chatIndex].lastMessage = input.slice(0, 30);
+						userChatData.chatsData[chatIndex].updatedAt = Date.now();
+						if (userChatData.chatsData[chatIndex].rId === userData.id) {
+							userChatData.chatsData[chatIndex].messageSeen = false;
+						}
+						await updateDoc(userChatsRef, {
+							chatsData: userChatData.chatsData,
+						});
+					}
+				});
+	
+				// Update lastSeen for the sender
+				await updateDoc(doc(db, "users", userData.id), {
+					lastSeen: Date.now(),
+				});
+			}
+		} catch (error) {
+			toast.error(error.message);
+			console.log(error);
+		}
+	
+		setInput("");
+	};
+	
     const markMessageAsSeen = async () => {
         try {
             if (messagesId) {
@@ -418,6 +467,29 @@ const ChatBox = () => {
         }
     };
 
+	const formatLastSeen = (lastSeen) => {
+		const now = Date.now();
+		const timeDiff = now - lastSeen;
+	
+		// If last seen was within the last minute
+		// if (timeDiff <= 70000) {
+		// 	return "Online";
+		// }
+	
+		// Otherwise, calculate how long ago it was
+		const seconds = Math.floor(timeDiff / 1000);
+		const minutes = Math.floor(seconds / 60);
+		const hours = Math.floor(minutes / 60);
+	
+		if (hours > 0) {
+			return `Active ${hours} hour${hours > 1 ? "s" : ""} ago`;
+		} else if (minutes > 0) {
+			return `Active ${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+		} else {
+			return `Active ${seconds} second${seconds > 1 ? "s" : ""} ago`;
+		}
+	};
+
     useEffect(() => {
         if (messagesId) {
             const unSub = onSnapshot(doc(db, "messages", messagesId), (res) => {
@@ -435,9 +507,14 @@ const ChatBox = () => {
         <div className={`chat-box ${chatVisible ? '' : 'hidden'}`}>
             <div className="chat-user">
                 <img src={assets.profile_img} alt="" />
-                <p>
-                    {chatUser.userData.name}
-                </p>
+				{chatUser.userData.name}
+				<p >
+					<p className="lastSeen">
+
+					{Date.now() - chatUser.userData.lastSeen <= 70000 ? <img className="dot" src={assets.green_dot} alt="" /> : <span>{formatLastSeen(chatUser.userData.lastSeen)}</span>}
+					
+					</p>
+				</p>
                 <img onClick={() => setChatVisible(false)} src={assets.arrow_icon} className="arrow" alt="" />
             </div>
 
