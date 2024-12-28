@@ -110,6 +110,30 @@ const ChatBox = () => {
 		}
 	};
 
+const formatLastSeen = (lastSeen) => {
+	const now = Date.now();
+	const timeDiff = now - lastSeen;
+
+	// If last seen was within the last minute
+	if (timeDiff <= 70000) {
+		return "Online";
+	}
+
+	// Otherwise, calculate how long ago it was
+	const seconds = Math.floor(timeDiff / 1000);
+	const minutes = Math.floor(seconds / 60);
+	const hours = Math.floor(minutes / 60);
+
+	if (hours > 0) {
+		return `Last seen ${hours} hour${hours > 1 ? "s" : ""} ago`;
+	} else if (minutes > 0) {
+		return `Last seen ${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+	} else {
+		return `Last seen ${seconds} second${seconds > 1 ? "s" : ""} ago`;
+	}
+};
+
+
 	useEffect(() => {
 		if (messagesId) {
 			const unSub = onSnapshot(doc(db, "messages", messagesId), (res) => {
@@ -130,7 +154,8 @@ const ChatBox = () => {
 				{/* <img src={chatUser.userData.avatar} alt="" /> */}
 				<p>
 					{chatUser.userData.name}
-					{Date.now() - chatUser.userData.lastSeen <= 70000 ? <img className="dot" src={assets.green_dot} alt="" /> : null}
+					{Date.now() - chatUser.userData.lastSeen <= 70000 ? <img className="dot" src={assets.green_dot} alt="" /> : <span>{formatLastSeen(chatUser.userData.lastSeen)}</span>}
+					{/* {Date.now() - chatUser.userData.lastSeen} */}
 				</p>
 				<img src={assets.help_icon} className="help" alt="" />
 				<img onClick={()=>setChatVisible(false)} src={assets.arrow_icon} className="arrow" alt="" />
@@ -158,6 +183,7 @@ const ChatBox = () => {
 								alt=""
 							/> */}
 							<p>{convertTimeStamp(msg.createdAt)}</p>
+							{/* <p>{msg.createdAt}</p> */}
 						</div>
 					</div>
 				))}
@@ -192,3 +218,152 @@ const ChatBox = () => {
 };
 
 export default ChatBox;
+
+
+
+
+
+
+
+
+
+
+// import React, { useContext, useEffect, useState } from "react";
+// import "./ChatBox.css";
+// import assets from "../../assets/assets";
+// import { AppContext } from "../../context/AppContext";
+// import {
+// 	arrayUnion,
+// 	doc,
+// 	getDoc,
+// 	onSnapshot,
+// 	updateDoc,
+// } from "firebase/firestore";
+// import { db } from "../../config/firebase";
+// import { toast } from "react-toastify";
+// import upload from "../../lib/upload";
+
+// const ChatBox = () => {
+// 	const { userData, messagesId, chatUser, messages, setMessages, chatVisible, setChatVisible} =
+// 		useContext(AppContext);
+
+// 	const [input, setInput] = useState("");
+
+// 	const sendMessage = async () => {
+// 		// ... your existing sendMessage function
+// 	};
+
+// 	const sendImage = async (e) => {
+// 		// ... your existing sendImage function
+// 	};
+
+// 	const convertTimeStamp = (timestamp) => {
+// 		let date = timestamp.toDate();
+// 		const hour = date.getHours();
+// 		const minute = date.getMinutes();
+// 		if (hour > 12) {
+// 			return hour - 12 + ":" + minute + " PM";
+// 		} else {
+// 			return hour + ":" + minute + " AM";
+// 		}
+// 	};
+
+// 	const formatLastSeen = (lastSeen) => {
+// 		const now = Date.now();
+// 		const timeDiff = now - lastSeen;
+
+// 		// If last seen was within the last minute
+// 		if (timeDiff <= 60000) {
+// 			return "Online";
+// 		}
+
+// 		// Otherwise, calculate how long ago it was
+// 		const seconds = Math.floor(timeDiff / 1000);
+// 		const minutes = Math.floor(seconds / 60);
+// 		const hours = Math.floor(minutes / 60);
+
+// 		if (hours > 0) {
+// 			return `Last seen ${hours} hour${hours > 1 ? "s" : ""} ago`;
+// 		} else if (minutes > 0) {
+// 			return `Last seen ${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+// 		} else {
+// 			return `Last seen ${seconds} second${seconds > 1 ? "s" : ""} ago`;
+// 		}
+// 	};
+
+// 	useEffect(() => {
+// 		if (messagesId) {
+// 			const unSub = onSnapshot(doc(db, "messages", messagesId), (res) => {
+// 				setMessages(res.data().messages.reverse());
+// 			});
+// 			return () => {
+// 				unSub();
+// 			};
+// 		}
+// 	}, [messagesId]);
+
+// 	return chatUser ? (
+// 		<div className={`chat-box ${chatVisible ? '' : 'hidden'}`}>
+// 			<div className="chat-user">
+// 				<img src={assets.profile_img} alt="" />
+// 				<p>
+// 					{chatUser.userData.name}
+// 					{/* Check if the user is online or show last seen */}
+// 					{Date.now() - chatUser.userData.lastSeen <= 70000 ? (
+// 						<img className="dot" src={assets.green_dot} alt="" />
+// 					) : (
+// 						<span>{formatLastSeen(chatUser.userData.lastSeen)}</span>
+// 					)}
+// 				</p>
+// 				<img src={assets.help_icon} className="help" alt="" />
+// 				<img onClick={() => setChatVisible(false)} src={assets.arrow_icon} className="arrow" alt="" />
+// 			</div>
+
+// 			<div className="chat-msg">
+// 				{messages.map((msg, index) => (
+// 					<div
+// 						key={index}
+// 						className={msg.sId === userData.id ? "s-msg" : "r-msg"}
+// 					>
+// 						{msg["image"] ? (
+// 							<img className="msg-img" src={msg.image} alt="" />
+// 						) : (
+// 							<p className="msg">{msg.text}</p>
+// 						)}
+// 						<div>
+// 							<img src={assets.profile_img} alt="" />
+// 							<p>{convertTimeStamp(msg.createdAt)}</p>
+// 						</div>
+// 					</div>
+// 				))}
+// 			</div>
+
+// 			<div className="chat-input">
+// 				<input
+// 					onChange={(e) => setInput(e.target.value)}
+// 					value={input}
+// 					type="text"
+// 					placeholder="Send a message"
+// 				/>
+// 				<input
+// 					onChange={sendImage}
+// 					type="file"
+// 					id="image"
+// 					accept="image/png, image/jpeg"
+// 					hidden
+// 				/>
+// 				<label htmlFor="image">
+// 					<img src={assets.gallery_icon} alt="" />
+// 				</label>
+// 				<img onClick={sendMessage} src={assets.send_button} alt="" />
+// 			</div>
+// 		</div>
+// 	) : (
+// 		<div className={`chat-welcome ${chatVisible ? '' : 'hidden'}`}>
+// 			<img src={assets.logo_icon} alt="" />
+// 			<p>Chat anytime, from anywhere!</p>
+// 		</div>
+// 	);
+// };
+
+// export default ChatBox;
