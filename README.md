@@ -1,5 +1,11 @@
 <div align="center">
 
+![vibechatLogo](https://github.com/user-attachments/assets/8afe9f37-f9d0-4128-a904-a87d5959dacc)
+
+</div>
+
+<div align="center">
+
 # Real-Time Chat App using React, Vite, and Firebase 🚀
 
 </div>
@@ -109,7 +115,6 @@ npm install
 
 ```
 npm run dev
-
 ```
 
 - Open the app in your browser at ```http://localhost:5173```.
@@ -120,10 +125,16 @@ npm run dev
 ## 📸 Screenshots
 
   ### Login Page
+  ![image](https://github.com/user-attachments/assets/27f1d5c7-0a9e-437c-9f41-e7ab3cd53b9a)
+
 
   ### Chat Screen
+  ![image](https://github.com/user-attachments/assets/4d11860c-1bd6-41d9-bad2-65850e196fc5)
+
 
   ### Profile Update Page
+  ![image](https://github.com/user-attachments/assets/d22dbfeb-725d-4f88-b4e5-c37a2e76a722)
+
 
 
   ---
