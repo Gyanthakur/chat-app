@@ -141,7 +141,8 @@ npm run dev
   ### Mobile view
   ![image](https://github.com/user-attachments/assets/64bd6629-449a-4f61-9187-53719bbda8be)
 
-  ![image](https://github.com/user-attachments/assets/fec2f492-94a2-46f7-9999-1c684c175896)
+  ![image](https://github.com/user-attachments/assets/46e36481-6083-4d23-9ebe-cac256af8acf)
+
 
   ![image](https://github.com/user-attachments/assets/db1f0262-7615-4314-a26c-884ec74ffd27)
 
