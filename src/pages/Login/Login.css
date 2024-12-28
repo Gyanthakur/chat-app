@@ -12,6 +12,7 @@
 }
 .login-form {
 	background: white;
+    background: linear-gradient( #d1dd74, #deaf95,#8fdbd1,#d5eadf);
 	padding: 20px 30px;
 	display: flex;
 	flex-direction: column;
