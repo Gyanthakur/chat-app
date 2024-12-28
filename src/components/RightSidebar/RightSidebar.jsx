@@ -51,12 +51,28 @@ const RightSidebar = () => {
 					<img onClick={()=>window.open(assets.pic4)} src={assets.pic4} alt="" />
 					<img onClick={()=>window.open(assets.pic1)} src={assets.pic1} alt="" />
 					<img onClick={()=>window.open(assets.pic2)} src={assets.pic2} alt="" />
+					<img onClick={()=>window.open(assets.pic4)} src={assets.pic4} alt="" />
+					<img onClick={()=>window.open(assets.pic1)} src={assets.pic1} alt="" />
+					<img onClick={()=>window.open(assets.pic2)} src={assets.pic2} alt="" />
+					<img onClick={()=>window.open(assets.pic2)} src={assets.pic2} alt="" />
+					<img onClick={()=>window.open(assets.pic3)} src={assets.pic3} alt="" />
+					<img onClick={()=>window.open(assets.pic4)} src={assets.pic4} alt="" />
+					<img onClick={()=>window.open(assets.pic1)} src={assets.pic1} alt="" />
+					<img onClick={()=>window.open(assets.pic2)} src={assets.pic2} alt="" />
+					<img onClick={()=>window.open(assets.pic4)} src={assets.pic4} alt="" />
+					<img onClick={()=>window.open(assets.pic1)} src={assets.pic1} alt="" />
+					<img onClick={()=>window.open(assets.pic2)} src={assets.pic2} alt="" />
+					<img onClick={()=>window.open(assets.pic2)} src={assets.pic2} alt="" />
+					<img onClick={()=>window.open(assets.pic3)} src={assets.pic3} alt="" />
+					<img onClick={()=>window.open(assets.pic4)} src={assets.pic4} alt="" />
+					<img onClick={()=>window.open(assets.pic1)} src={assets.pic1} alt="" />
+					<img onClick={()=>window.open(assets.pic2)} src={assets.pic2} alt="" />
 
 
 				</div>
 			</div>
 
-            <button onClick={()=>logout()}>Logout</button>
+            {/* <button onClick={()=>logout()}>Logout</button> */}
 		</div>
 	)
 	:

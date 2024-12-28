@@ -45,6 +45,8 @@ img.dot{
     bottom: 0;
     left: 0;
     right: 0;
+    width: 100%;
+    min-width: 5px;
 }
 
 .chat-input img{
@@ -206,6 +208,7 @@ img.dot{
         font-size: 10px;
         padding: 6px;
     }
+    
 
     .chat-welcome p {
         font-size: 16px;
@@ -226,5 +229,14 @@ img.dot{
 
     .chat-user p {
         font-size: 14px;
+    }
+}
+
+
+@media (max-width: 300px) {
+    .chat-input input{
+        flex: 0.2;
+        border: none;
+        outline: none;
     }
 }
