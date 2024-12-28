@@ -1,5 +1,12 @@
 <div align="center">
 
+<img width="300" alt="logo_icon" src="https://github.com/user-attachments/assets/017c884f-2802-4997-b343-68ee8e3eeb48" />
+
+
+</div>
+
+<div align="center">
+
 # Real-Time Chat App using React, Vite, and Firebase 🚀
 
 </div>
@@ -109,7 +116,6 @@ npm install
 
 ```
 npm run dev
-
 ```
 
 - Open the app in your browser at ```http://localhost:5173```.
@@ -120,10 +126,26 @@ npm run dev
 ## 📸 Screenshots
 
   ### Login Page
+  ![image](https://github.com/user-attachments/assets/27f1d5c7-0a9e-437c-9f41-e7ab3cd53b9a)
+
 
   ### Chat Screen
+  ![image](https://github.com/user-attachments/assets/6d24b3d3-6c7e-44a3-86ed-b5d34b2d647e)
+
+
 
   ### Profile Update Page
+  ![image](https://github.com/user-attachments/assets/d22dbfeb-725d-4f88-b4e5-c37a2e76a722)
+
+  ---
+  ### Mobile view
+  ![image](https://github.com/user-attachments/assets/64bd6629-449a-4f61-9187-53719bbda8be)
+
+  ![image](https://github.com/user-attachments/assets/46e36481-6083-4d23-9ebe-cac256af8acf)
+
+
+  ![image](https://github.com/user-attachments/assets/db1f0262-7615-4314-a26c-884ec74ffd27)
+
 
 
   ---
